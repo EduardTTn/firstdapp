@@ -37,22 +37,30 @@ class AddEvent extends Component {
     //upon submitting, the function calls the add method of the contract
 
     onSubmit = async event => {
-        if (this.state.VIN === '' || this.state.day === '' || this.state.month === '' || this.state.year === '' || this.state.type === '' || this.state.mileage === '' || this.state.desc === '') {
-            this.setState({errorMessage: "Fields can't be empty"});
-        } else if (this.state.day > 31 || this.state.day < 1) {
-            this.setState({errorMessage: "Invalid day"});
-        } else if (this.state.month > 12 || this.state.month < 1) {
-            this.setState({errorMessage: "Invalid month"});
-        } else if (this.state.year > 2040 || this.state.year < 2019) {
-            this.setState({errorMessage: "Invalid year"});
-        } else if (this.state.errorMessage === '') {
-            event.preventDefault();
-            this.setState({accounts: await web3.eth.getAccounts()});
-            this.setState({loading: true, errorMessage: ''});
-            await instance.methods.addEvent(this.state.VIN, this.state.day, this.state.month, this.state.year, this.state.type, this.state.mileage, this.state.desc).send({
-                from: this.state.accounts[0]
-            });
+
+        try {
+            if (this.state.VIN === '' || this.state.day === '' || this.state.month === '' || this.state.year === '' || this.state.type === '' || this.state.mileage === '' || this.state.desc === '') {
+                this.setState({errorMessage: "Fields can't be empty"});
+            } else if (this.state.day > 31 || this.state.day < 1) {
+                this.setState({errorMessage: "Invalid day"});
+            } else if (this.state.month > 12 || this.state.month < 1) {
+                this.setState({errorMessage: "Invalid month"});
+            } else if (this.state.year > 2040 || this.state.year < 2019) {
+                this.setState({errorMessage: "Invalid year"});
+            } else if (this.state.errorMessage === '') {
+                event.preventDefault();
+                this.setState({accounts: await web3.eth.getAccounts()});
+                this.setState({loading: true, errorMessage: ''});
+                await instance.methods.addEvent(this.state.VIN, this.state.day, this.state.month, this.state.year, this.state.type, this.state.mileage, this.state.desc).send({
+                    from: this.state.accounts[0]
+                });
+            }
         }
+
+        catch(err){
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }        }
     };
 
     //handle methods are changing the states and prevent the default behaviour
@@ -114,12 +122,12 @@ class AddEvent extends Component {
             <div>
                 <div>
                     <Menu fixed='top' inverted>
-                        <Container>
+                        <Container textAlign='center'>
                             <Link href="/index">
-                                <Menu.Item as='a' header>
-                                    <Image size='normal' src='https://img.icons8.com/cotton/50/000000/retro-car.png'
-                                           style={{marginLeft: '1.5em'}}/>
-                                    <h2>Car Record</h2>
+                                <Menu.Item as='a' header style={{margin: '3px'}}>
+                                    <Image size='normal' src='https://img.icons8.com/cotton/75/000000/retro-car.png'
+                                           style={{marginleft: '1.5em'}}/>
+                                    <h2 style={{margin: '5px'}}>Car Record</h2>
                                 </Menu.Item>
                             </Link>
                             {this.state.isOwner === false ? null :
@@ -225,7 +233,7 @@ class AddEvent extends Component {
                             </Form.Field>
                         </Form.Group>
                         <Form.Field>
-                            <Button onClick={this.onSubmit} color={"purple"}>
+                            <Button onClick={this.onSubmit} color={"purple"} disabled={this.state.loading}>
                                 Make Changes
                             </Button>
                         </Form.Field>

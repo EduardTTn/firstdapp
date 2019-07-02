@@ -85,13 +85,13 @@ class ModifyCar extends Component {
         return (
             <div>
                 <div>
-                    <Menu pointing fixed='top' inverted>
-                        <Container>
+                    <Menu fixed='top' inverted>
+                        <Container textAlign='center'>
                             <Link href="/index">
-                                <Menu.Item as='a' header>
-                                    <Image size='normal' src='https://img.icons8.com/cotton/50/000000/retro-car.png'
-                                           style={{marginLeft: '1.5em'}}/>
-                                    <h2>Car Record</h2>
+                                <Menu.Item as='a' header style={{margin: '3px'}}>
+                                    <Image size='normal' src='https://img.icons8.com/cotton/75/000000/retro-car.png'
+                                           style={{marginleft: '1.5em'}}/>
+                                    <h2 style={{margin: '5px'}}>Car Record</h2>
                                 </Menu.Item>
                             </Link>
                             {this.state.isOwner === false ? null :
@@ -158,7 +158,7 @@ class ModifyCar extends Component {
                                 />
                             </Form.Field>
                             <Form.Field>
-                                <Button onClick={this.onSubmit} color={"purple"}>
+                                <Button onClick={this.onSubmit} color={"purple"} disabled={this.state.loading}>
                                     Make Changes
                                 </Button>
                             </Form.Field>

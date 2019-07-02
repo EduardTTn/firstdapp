@@ -27,25 +27,28 @@ class ManageAdmin extends Component {
     onSubmit = async event => {
         event.preventDefault();
 
-        this.setState({loading: true, errorMessage: ''});
-
         try {
             this.setState({accounts: await web3.eth.getAccounts()});
             this.setState({errorRemoveMessage: ''});
             this.setState({errorSearchMessage: ''});
-
+            this.setState({loading: true});
             await instance.methods.addAdmin(this.state.address, this.state.name).send({
                 from: this.state.accounts[0]
             })
 
+
         } catch (err) {
+            if (err.message.includes('User denied')) {
+                this.setState({errorMessage: "Transaction Canceled"});
+            }
             this.setState({loading: false});
             if (this.state.address === '' || this.state.name === '') {
                 this.setState({errorMessage: "Fields can't be empty"});
             } else if (err.message.includes('invalid address'))
                 this.setState({errorMessage: 'invalid address'});
+
         }
-        this.setState({loading: false});
+
     };
 
     //upon submitting, the function calls removeAdmin method of the contract
@@ -55,18 +58,20 @@ class ManageAdmin extends Component {
         this.setState({errorMessage: ''});
         this.setState({errorRemoveMessage: ''});
         try {
-            this.setState({loading: true, errorSearchMessage: ''});
             if (this.state.removeadmin === '') {
                 this.setState({errorRemoveMessage: 'Field is empty'})
             } else {
+                this.setState({loading: true, errorSearchMessage: ''});
                 await instance.methods.removeAdmin(this.state.removeadmin).send({
                     from: this.state.accounts[0]
                 });
+
             }
         } catch (error) {
             this.setState({errorRemoveMessage: error.message});
+            this.setState({loading: false});
         }
-        this.setState({loading: false});
+
     };
 
     //upon submitting, the checkAdmin function of the contract
@@ -77,7 +82,6 @@ class ManageAdmin extends Component {
             this.setState({errorMessage: ''});
             this.setState({errorRemoveMessage: ''});
             this.setState({loading: true, errorSearchMessage: ''});
-
             if (this.state.adminsearch === '') {
                 this.setState({errorSearchMessage: 'Field is empty'});
             } else {
@@ -151,29 +155,33 @@ class ManageAdmin extends Component {
                 <div>
                     <div>
                         <Menu fixed='top' inverted>
-                            <Container>
+                            <Container textAlign='center'>
                                 <Link href="/index">
-                                    <Menu.Item as='a' header>
-                                        <Image size='normal' src='https://img.icons8.com/cotton/50/000000/retro-car.png'
-                                               style={{marginLeft: '1.5em'}}/>
-                                        <h2>Car Record</h2>
+                                    <Menu.Item as='a' header style={{margin: '3px'}}>
+                                        <Image size='normal' src='https://img.icons8.com/cotton/75/000000/retro-car.png'
+                                               style={{marginleft: '1.5em'}}/>
+                                        <h2 style={{margin: '5px'}}>Car Record</h2>
                                     </Menu.Item>
                                 </Link>
-                                <Menu.Item as='a'><Link href="/ManageAdmin">Manage Admin</Link></Menu.Item> :
-                                <Dropdown item simple text='Manage Cars'>
-                                    <Dropdown.Menu>
-                                        <Link href="/AddCar">
-                                            <Dropdown.Item as='a'>Add Car</Dropdown.Item>
-                                        </Link>
-                                        <Link href="/ModifyCar">
-                                            <Dropdown.Item as='a'>Modify Car</Dropdown.Item>
-                                        </Link>
-                                        <Link href="/AddEvent">
-                                            <Dropdown.Item as='a'>Add Event</Dropdown.Item>
-                                        </Link>
-                                        }
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                {this.state.isOwner === false ? null :
+                                    <Menu.Item><Link href="/ManageAdmin">Manage Admin</Link></Menu.Item>
+                                }
+                                {this.state.isAdmin === false ? null :
+                                    <Dropdown item simple text='Manage Cars' disabled={this.props.admin}>
+                                        <Dropdown.Menu>
+                                            <Link href="/AddCar">
+                                                <Dropdown.Item as='a'>Add Car</Dropdown.Item>
+                                            </Link>
+                                            <Link href="/ModifyCar">
+                                                <Dropdown.Item as='a'>Modify Car</Dropdown.Item>
+                                            </Link>
+                                            <Link href="/AddEvent">
+                                                <Dropdown.Item as='a'>Add Event</Dropdown.Item>
+                                            </Link>
+                                            }
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                }
                             </Container>
                         </Menu>
                     </div>
@@ -213,7 +221,7 @@ class ManageAdmin extends Component {
                                     />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button onClick={this.onSubmit} color={"purple"}>
+                                    <Button onClick={this.onSubmit} color={"purple"} disabled={this.state.loading}>
                                         Add
                                     </Button>
                                 </Form.Field>
@@ -237,7 +245,7 @@ class ManageAdmin extends Component {
                                     />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button onClick={this.onSubmitRemove} color={"purple"}>
+                                    <Button onClick={this.onSubmitRemove} color={"purple"} disabled={this.state.loading}>
                                         Remove
                                     </Button>
                                 </Form.Field>
@@ -262,7 +270,7 @@ class ManageAdmin extends Component {
                                     />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button onClick={this.onSubmitSearch} color={"purple"}>
+                                    <Button onClick={this.onSubmitSearch} color={"purple"} disabled={this.state.loading}>
                                         <Icon color='white' name='search'/>
                                     </Button>
 

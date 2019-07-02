@@ -32,24 +32,33 @@ class AddCar extends Component {
         isAdmin: false
     };
 
-    //upon submiting, the function calls the addCar method of the contract
+    //upon submitting, the function calls the addCar method of the contract
     onSubmit = async event => {
         try {
             event.preventDefault();
             this.setState({accounts: await web3.eth.getAccounts()});
-            this.setState({loading: true, errorMessage: ''});
+
 
             if (this.state.year >= 1900 && this.state.year <= 2019) {
                 if (this.state.VIN === '' || this.state.brand === '' || this.state.year === '' || this.state.color === '' || this.state.license === '') {
                     this.setState({errorMessage: "Fields can't be empty"});
-                } else await instance.methods.addCar(this.state.VIN, this.state.brand, this.state.year, this.state.color, this.state.license).send({
-                    from: this.state.accounts[0]
-                });
-            } else this.setState({errorMessage: "Invalid year"});
+                } else {
+                    this.setState({loading: true, errorMessage: ''});
+                    await instance.methods.addCar(this.state.VIN, this.state.brand, this.state.year, this.state.color, this.state.license).send({
+                        from: this.state.accounts[0]
+                    });
+                }
 
+            } else {
+                this.setState({errorMessage: "Invalid year"});
+                this.setState({loading: false});
+            }
         } catch (err) {
             this.setState({errorMessage: err.message});
-            this.setState({loading: false});
+            if (err.message.includes('User denied')){
+                this.setState({  errorMessage: "Transaction Canceled" });
+            }
+
         }
     };
 
@@ -103,13 +112,13 @@ class AddCar extends Component {
         return (
             <div>
                 <div>
-                    <Menu pointing fixed='top' inverted>
+                    <Menu fixed='top' inverted>
                         <Container textAlign='center'>
                             <Link href="/index">
-                                <Menu.Item as='a' header>
-                                    <Image size='normal' src='https://img.icons8.com/cotton/50/000000/retro-car.png'
-                                           style={{margin: '1,5em'}}/>
-                                    <h2>Car Record</h2>
+                                <Menu.Item as='a' header style={{margin: '3px'}}>
+                                    <Image size='normal' src='https://img.icons8.com/cotton/75/000000/retro-car.png'
+                                           style={{marginleft: '1.5em'}}/>
+                                    <h2 style={{margin: '5px'}}>Car Record</h2>
                                 </Menu.Item>
                             </Link>
                             {this.state.isOwner === false ? null :
@@ -187,7 +196,7 @@ class AddCar extends Component {
                                 />
                             </Form.Field>
                             <Form.Field>
-                                <Button onClick={this.onSubmit} color={"purple"}>
+                                <Button onClick={this.onSubmit} color={"purple"} disabled={this.state.loading}>
                                     Submit
                                 </Button>
                             </Form.Field>

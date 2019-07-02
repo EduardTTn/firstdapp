@@ -249,6 +249,7 @@ class Index extends Component {
                         <Button loading={!!this.state.loading} style={cardStyle} variant="contained" color="purple"
                                 disabled={this.state.disableEventButton === true || this.state.errorMessage !== ''}
                                 onClick={this.onClick}
+                                disabled={this.state.loading}
                                 error={!!this.state.errorMessage}>
                             Show Events
                         </Button>

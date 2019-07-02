@@ -287,7 +287,7 @@ const abi = [
 ];
 
 //constant that stores the address of the contract
-const address = '0xb96bfa435cfdfcb9c91445c1e6675ef6b3e7099e';
+const address = '0x8f1b319c3bd7cd9566be5220d3fda0bee78261b5';
 
 const instance = new web3.eth.Contract(abi, address);
 
