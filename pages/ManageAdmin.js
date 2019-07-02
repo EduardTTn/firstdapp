@@ -6,14 +6,10 @@ import web3 from "../components/web3.js"
 import Link from 'next/link';
 import FixedMenuLayout from "../components/footer";
 import SimpleSnackbar from "../components/snackbar";
-import {Snackbar} from "@material-ui/core";
-
 
 class ManageAdmin extends Component {
 
-
     state = {
-
         loading: false,
         errorMessage: '',
         errorRemoveMessage: '',
@@ -27,11 +23,11 @@ class ManageAdmin extends Component {
         showifadmin: false
     };
 
+    //upon submitting, the function calls addAdmin method of the contract
     onSubmit = async event => {
         event.preventDefault();
 
         this.setState({loading: true, errorMessage: ''});
-
 
         try {
             this.setState({accounts: await web3.eth.getAccounts()});
@@ -50,39 +46,31 @@ class ManageAdmin extends Component {
                 this.setState({errorMessage: 'invalid address'});
         }
         this.setState({loading: false});
-
-        console.log(accounts);
     };
 
-
+    //upon submitting, the function calls removeAdmin method of the contract
     onSubmitRemove = async event => {
         event.preventDefault();
         this.setState({accounts: await web3.eth.getAccounts()});
         this.setState({errorMessage: ''});
         this.setState({errorRemoveMessage: ''});
         try {
-
             this.setState({loading: true, errorSearchMessage: ''});
             if (this.state.removeadmin === '') {
                 this.setState({errorRemoveMessage: 'Field is empty'})
             } else {
                 await instance.methods.removeAdmin(this.state.removeadmin).send({
                     from: this.state.accounts[0]
-
                 });
-
             }
-
         } catch (error) {
             this.setState({errorRemoveMessage: error.message});
         }
         this.setState({loading: false});
-
-
     };
 
+    //upon submitting, the checkAdmin function of the contract
     onSubmitSearch = async event => {
-
         try {
             event.preventDefault();
             this.setState({accounts: await web3.eth.getAccounts()});
@@ -96,17 +84,13 @@ class ManageAdmin extends Component {
                 this.setState({isAdmin: await instance.methods.checkAdmin(this.state.adminsearch).call()});
                 this.setState({showifadmin: true});
             }
-
         } catch (err) {
-
             this.setState({errorSearchMessage: err.message});
         }
-
         this.setState({loading: false});
-        console.log(accounts);
     };
 
-
+    //handle methods are changing the states and prevent the default behaviour
     handleChangeAddress = event => {
         event.preventDefault();
         this.setState({address: event.target.value});
@@ -144,8 +128,6 @@ class ManageAdmin extends Component {
 
     render() {
 
-
-
         let buttonStyle = {
             margin: '4px'
         };
@@ -166,7 +148,6 @@ class ManageAdmin extends Component {
 
         {
             return (
-
                 <div>
                     <div>
                         <Menu fixed='top' inverted>
@@ -179,8 +160,6 @@ class ManageAdmin extends Component {
                                     </Menu.Item>
                                 </Link>
                                 <Menu.Item as='a'><Link href="/ManageAdmin">Manage Admin</Link></Menu.Item> :
-
-
                                 <Dropdown item simple text='Manage Cars'>
                                     <Dropdown.Menu>
                                         <Link href="/AddCar">
@@ -193,13 +172,9 @@ class ManageAdmin extends Component {
                                             <Dropdown.Item as='a'>Add Event</Dropdown.Item>
                                         </Link>
                                         }
-
-
                                     </Dropdown.Menu>
                                 </Dropdown>
-
                             </Container>
-
                         </Menu>
                     </div>
                     <Head>
@@ -215,19 +190,13 @@ class ManageAdmin extends Component {
         }
       `}</style>
                     </Head>
-
                     <h1 style={{margin: '20px'}}>Manage Admins</h1>
-
-
                     <Segment inverted style={cardStyle}>
                         <label style={labelStyle}><h3>Add Admin</h3></label>
                         <Form inverted className={"form-inline"} onSubmit={this.onSubmit}
                               error={!!this.state.errorMessage} style={formstyle}>
                             <Form.Group inline style={{width: '60%', margin: '30px auto'}}>
-
                                 <Form.Field required style={{width: '70%', margin: '10px'}}>
-
-
                                     <Form.Input fluid label="Admin Address:" placeholder="Address of the Admin"
                                                 aria-placeholder={{color: 'purple'}}
                                                 style={{width: '100%'}}
@@ -235,8 +204,6 @@ class ManageAdmin extends Component {
                                                 onChange={this.handleChangeAddress}
                                                 error={!!this.state.errorMessage}
                                     />
-
-
                                     <Form.Input fluid label="Admin Name:" placeholder="Name of the Admin"
                                                 aria-placeholder={{color: 'purple'}}
                                                 style={{width: '96.555%'}}
@@ -246,7 +213,7 @@ class ManageAdmin extends Component {
                                     />
                                 </Form.Field>
                                 <Form.Field>
-                                    <Button  onClick={this.onSubmit} color={"purple"}>
+                                    <Button onClick={this.onSubmit} color={"purple"}>
                                         Add
                                     </Button>
                                 </Form.Field>
@@ -254,7 +221,6 @@ class ManageAdmin extends Component {
                             <Message style={buttonStyle} error header={"Error!"} content={this.state.errorMessage}/>
                         </Form>
                     </Segment>
-
                     <Segment inverted style={cardStyle}>
                         <label style={labelStyle}><h3>Remove Admin</h3></label>
                         <Form inverted className={"form-inline"} onSubmit={this.onSubmit}
@@ -280,10 +246,9 @@ class ManageAdmin extends Component {
                                      content={this.state.errorRemoveMessage}/>
                         </Form>
                     </Segment>
-
                     <Segment inverted style={cardStyle}>
                         <label style={labelStyle}><h3>Check Admin</h3></label>
-                        <Form inverted inverted  className={"form-inline"} onSubmit={this.onSubmitSearch}
+                        <Form inverted inverted className={"form-inline"} onSubmit={this.onSubmitSearch}
                               error={!!this.state.errorSearchMessage} style={formstyle}>
                             <Form.Group inline style={{width: '60%', margin: '50px auto',}}>
                                 <label>Admin Name:</label>
@@ -305,22 +270,17 @@ class ManageAdmin extends Component {
                             </Form.Group>
                             <Message style={buttonStyle} error header={"Error!"}
                                      content={this.state.errorSearchMessage}/>
-
                         </Form>
                         <div>{this.state.showifadmin === true ?
                             <Message info>{this.state.isAdmin === true ? 'Is an Admin' : 'Is not an Admin'}</Message>
                             : null}</div>
                     </Segment>
-
                     <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
-
                     <FixedMenuLayout/>
-
                 </div>
-
             );
         }
     }
 }
 
-export default ManageAdmin
+export default ManageAdmin;

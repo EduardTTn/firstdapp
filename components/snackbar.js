@@ -14,7 +14,6 @@ function SimpleSnackbar() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
-
     function handleClose(event, reason) {
         if (reason === 'clickaway') {
             return;
@@ -36,7 +35,7 @@ function SimpleSnackbar() {
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
-                message={<h3>Please wait while metamask fetches the data</h3>}
+                message={<h3>Please wait for the metamask to confirm the transaction</h3>}
                 action={[
                     <IconButton
                         key="close"

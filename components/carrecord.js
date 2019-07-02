@@ -1,6 +1,6 @@
 import web3 from './web3.js';
 
-
+//constant that stores the abi of contract
 const abi = [
     {
         "constant": false,
@@ -286,9 +286,9 @@ const abi = [
     }
 ];
 
+//constant that stores the address of the contract
 const address = '0xb96bfa435cfdfcb9c91445c1e6675ef6b3e7099e';
 
 const instance = new web3.eth.Contract(abi, address);
-
 
 export default instance;

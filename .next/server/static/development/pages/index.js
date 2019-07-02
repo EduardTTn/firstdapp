@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -103,6 +103,7 @@ module.exports =
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _web3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./web3.js */ "./components/web3.js");
+ //constant that stores the abi of contract
 
 var abi = [{
   "constant": false,
@@ -317,7 +318,8 @@ var abi = [{
   "payable": false,
   "stateMutability": "view",
   "type": "function"
-}];
+}]; //constant that stores the address of the contract
+
 var address = '0xb96bfa435cfdfcb9c91445c1e6675ef6b3e7099e';
 var instance = new _web3_js__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(abi, address);
 /* harmony default export */ __webpack_exports__["default"] = (instance);
@@ -345,7 +347,7 @@ var FixedMenuLayout = function FixedMenuLayout() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 10
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Segment"], {
@@ -359,14 +361,14 @@ var FixedMenuLayout = function FixedMenuLayout() {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 11
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Container"], {
     textAlign: "center",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 12
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
@@ -375,21 +377,19 @@ var FixedMenuLayout = function FixedMenuLayout() {
     src: "https://modex.tech/wp-content/uploads/2018/11/logo-top3.png",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20
+      lineNumber: 13
     },
     __self: this
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Divider"], {
-    inverted: true,
-    section: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 14
     },
     __self: this
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 27
+      lineNumber: 15
     },
     __self: this
   }, "\xA9 2019 Modex. | MODEX (Gibraltar) LIMITED, 57/63 Line Wall Road, Gibraltar "))));
@@ -453,7 +453,7 @@ function SimpleSnackbar() {
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 27
+      lineNumber: 26
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Snackbar__WEBPACK_IMPORTED_MODULE_3___default.a, {
@@ -473,10 +473,10 @@ function SimpleSnackbar() {
     message: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 38
       },
       __self: this
-    }, "Please wait while metamask fetches the data"),
+    }, "Please wait for the metamask to confirm the transaction"),
     action: [react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_IconButton__WEBPACK_IMPORTED_MODULE_4___default.a, {
       key: "close",
       "aria-label": "Close",
@@ -485,19 +485,19 @@ function SimpleSnackbar() {
       onClick: handleClose,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 41
+        lineNumber: 40
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_icons_Close__WEBPACK_IMPORTED_MODULE_5___default.a, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 48
+        lineNumber: 47
       },
       __self: this
     }))],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 27
     },
     __self: this
   }));
@@ -1698,7 +1698,8 @@ function (_Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       this.loadBlockchainData();
-    }
+    } //verifies if an user is admin or the owner of the contract
+
   }, {
     key: "loadBlockchainData",
     value: function () {
@@ -1896,7 +1897,7 @@ function (_Component) {
 
                 if (g === '') {
                   _this.setState({
-                    errorMessage: 'Field is empty'
+                    errorMessage: 'Please fill the search form'
                   });
                 } // set state.car to x only if there are valid values in X
 
@@ -1974,10 +1975,12 @@ function (_Component) {
       isAdmin: false
     };
     return _this;
-  }
+  } //upon clicking, the function returns the events of the car registered in the contract
+
 
   Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_8__["default"])(Index, [{
     key: "renderEvents",
+    //renders an event in a table row
     value: function renderEvents() {
       var x = this.state.VIN;
       var r = this.state.events.map(function (event) {
@@ -2025,7 +2028,8 @@ function (_Component) {
         }, event[6].toString()))];
       });
       return r;
-    }
+    } //renders all the events in a row
+
   }, {
     key: "renderTables",
     value: function renderTables() {
@@ -2043,55 +2047,55 @@ function (_Component) {
           inverted: true,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 97
+            lineNumber: 96
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].Header, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 98
+            lineNumber: 97
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].Row, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 99
+            lineNumber: 98
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].HeaderCell, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 100
+            lineNumber: 99
           },
           __self: this
         }, "Date"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].HeaderCell, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 101
+            lineNumber: 100
           },
           __self: this
         }, "Type"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].HeaderCell, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 102
+            lineNumber: 101
           },
           __self: this
         }, "Mileage"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].HeaderCell, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 103
+            lineNumber: 102
           },
           __self: this
         }, "Description"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].HeaderCell, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 104
+            lineNumber: 103
           },
           __self: this
         }, "Made by"))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Table"].Body, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 107
+            lineNumber: 106
           },
           __self: this
         }, this.state.disableEventButton === false ? null : this.renderEvents()));
@@ -2104,12 +2108,13 @@ function (_Component) {
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 114
+            lineNumber: 112
           },
           __self: this
         }, " This car has no events recorded ");
       }
-    }
+    } //upon submitting, the function returns the basic info of a car registered in the contract
+
   }, {
     key: "render",
     value: function render() {
@@ -2122,17 +2127,16 @@ function (_Component) {
       var formStyle = {
         width: '100%'
       };
-      console.log(this.state.isOwner);
       return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 174
+          lineNumber: 166
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 175
+          lineNumber: 167
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Menu"], {
@@ -2140,58 +2144,65 @@ function (_Component) {
         inverted: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 176
+          lineNumber: 168
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Container"], {
+        textAlign: "center",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 177
+          lineNumber: 169
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_17___default.a, {
         href: "/index",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 178
+          lineNumber: 170
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Menu"].Item, {
         as: "a",
         header: true,
+        style: {
+          margin: '3px'
+        },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 179
+          lineNumber: 171
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Image"], {
         size: "normal",
-        src: "https://img.icons8.com/cotton/50/000000/retro-car.png",
+        src: "https://img.icons8.com/cotton/75/000000/retro-car.png",
         style: {
-          marginLeft: '1.5em'
+          marginleft: '1.5em'
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 180
+          lineNumber: 172
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("h2", {
+        style: {
+          margin: '5px'
+        },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 182
+          lineNumber: 174
         },
         __self: this
       }, "Car Record"))), this.state.isOwner === false ? null : react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Menu"].Item, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 186
+          lineNumber: 178
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_17___default.a, {
         href: "/ManageAdmin",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 186
+          lineNumber: 178
         },
         __self: this
       }, "Manage Admin")), this.state.isAdmin === false ? null : react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Dropdown"], {
@@ -2201,61 +2212,61 @@ function (_Component) {
         disabled: this.props.admin,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 189
+          lineNumber: 181
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Dropdown"].Menu, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 190
+          lineNumber: 182
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_17___default.a, {
         href: "/AddCar",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 191
+          lineNumber: 183
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Dropdown"].Item, {
         as: "a",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 192
+          lineNumber: 184
         },
         __self: this
       }, "Add Car")), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_17___default.a, {
         href: "/ModifyCar",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 194
+          lineNumber: 186
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Dropdown"].Item, {
         as: "a",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 195
+          lineNumber: 187
         },
         __self: this
       }, "Modify Car")), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_17___default.a, {
         href: "/AddEvent",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 197
+          lineNumber: 189
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Dropdown"].Item, {
         as: "a",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 198
+          lineNumber: 190
         },
         __self: this
       }, "Add Event")), "}"))))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(next_head__WEBPACK_IMPORTED_MODULE_15___default.a, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 211
+          lineNumber: 199
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("link", {
@@ -2263,13 +2274,13 @@ function (_Component) {
         href: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 212
+          lineNumber: 200
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("style", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 216
+          lineNumber: 204
         },
         __self: this
       }, "\n        body {\n         background: url(\"https://images.pexels.com/photos/707047/pexels-photo-707047.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1280&w=1900\");\n         background-repeat: no-repeat;\n         background-position: center; \n        }\n      ")), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("h1", {
@@ -2278,7 +2289,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 226
+          lineNumber: 212
         },
         __self: this
       }, "Car Info"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Form"], {
@@ -2288,7 +2299,7 @@ function (_Component) {
         error: !!this.state.errorMessage,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 227
+          lineNumber: 213
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Form"].Group, {
@@ -2299,7 +2310,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 230
+          lineNumber: 215
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("label", {
@@ -2308,7 +2319,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 231
+          lineNumber: 216
         },
         __self: this
       }, "Search:"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Form"].Field, {
@@ -2317,7 +2328,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 232
+          lineNumber: 217
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Form"].Input, {
@@ -2335,13 +2346,13 @@ function (_Component) {
         error: !!this.state.errorMessage,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 233
+          lineNumber: 218
         },
         __self: this
       })), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Form"].Field, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 241
+          lineNumber: 226
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Button"], {
@@ -2353,7 +2364,7 @@ function (_Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 242
+          lineNumber: 227
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Icon"], {
@@ -2361,7 +2372,7 @@ function (_Component) {
         name: "search",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 245
+          lineNumber: 230
         },
         __self: this
       })))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Message"], {
@@ -2370,72 +2381,72 @@ function (_Component) {
           margin: '30px auto'
         },
         error: true,
-        header: "Error!",
+        header: "Notification:",
         content: this.state.errorMessage,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 249
+          lineNumber: 234
         },
         __self: this
       })), this.state.car != null && this.state.car[0] != null ? react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a, {
         style: cardStyle,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 252
+          lineNumber: 238
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Content, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 253
+          lineNumber: 239
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Header, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 254
+          lineNumber: 240
         },
         __self: this
       }, " BRAND: "), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Description, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 255
+          lineNumber: 241
         },
         __self: this
       }, this.state.car[0]), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Header, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 256
+          lineNumber: 242
         },
         __self: this
       }, "YEAR:"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Description, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 257
+          lineNumber: 243
         },
         __self: this
       }, _babel_runtime_corejs2_core_js_parse_int__WEBPACK_IMPORTED_MODULE_0___default()(this.state.car[1]) >= 1 ? _babel_runtime_corejs2_core_js_parse_int__WEBPACK_IMPORTED_MODULE_0___default()(this.state.car[1]) : ''), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Header, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 258
+          lineNumber: 244
         },
         __self: this
       }, "COLOR:"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Description, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 259
+          lineNumber: 245
         },
         __self: this
       }, this.state.car[2]), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Header, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 260
+          lineNumber: 246
         },
         __self: this
       }, "LICENSE:"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react_dist_commonjs_views_Card__WEBPACK_IMPORTED_MODULE_13___default.a.Description, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 261
+          lineNumber: 247
         },
         __self: this
       }, this.state.car[3])), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_14__["Button"], {
@@ -2448,25 +2459,25 @@ function (_Component) {
         error: !!this.state.errorMessage,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 264
+          lineNumber: 249
         },
         __self: this
       }, "Show Events")) : null, this.state.showTable === true ? this.renderTables() : null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_components_footer__WEBPACK_IMPORTED_MODULE_16__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 273
+          lineNumber: 258
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 274
+          lineNumber: 259
         },
         __self: this
       }, this.state.loading === true ? react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_components_snackbar__WEBPACK_IMPORTED_MODULE_19__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 274
+          lineNumber: 259
         },
         __self: this
       }) : null));
@@ -2480,7 +2491,7 @@ function (_Component) {
 
 /***/ }),
 
-/***/ 6:
+/***/ 3:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/

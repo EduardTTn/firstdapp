@@ -7,13 +7,12 @@ import Link from 'next/link';
 import FixedMenuLayout from "../components/footer";
 import SimpleSnackbar from "../components/snackbar";
 
-
-
-class AddCar extends Component{
-    componentWillMount(){
+class AddCar extends Component {
+    componentWillMount() {
         this.loadBlockchainData()
     }
 
+    //verifies if an user is admin or the owner of the contract
     async loadBlockchainData() {
         let accounts = await web3.eth.getAccounts();
         this.setState({isOwner: await instance.methods.checkIfOwner(accounts[0]).call()});
@@ -23,54 +22,43 @@ class AddCar extends Component{
 
     state = {
         VIN: '',
-        brand:'',
-        year:'',
+        brand: '',
+        year: '',
         color: '',
         license: '',
         loading: false,
-        errorMessage:'',
+        errorMessage: '',
         isOwner: false,
         isAdmin: false
-
     };
 
+    //upon submiting, the function calls the addCar method of the contract
     onSubmit = async event => {
-
-
-
         try {
             event.preventDefault();
             this.setState({accounts: await web3.eth.getAccounts()});
             this.setState({loading: true, errorMessage: ''});
 
             if (this.state.year >= 1900 && this.state.year <= 2019) {
-                 if  (this.state.VIN === '' || this.state.brand === '' || this.state.year === '' || this.state.color === '' || this.state.license === '') {
+                if (this.state.VIN === '' || this.state.brand === '' || this.state.year === '' || this.state.color === '' || this.state.license === '') {
                     this.setState({errorMessage: "Fields can't be empty"});
-                }
-                 else  await instance.methods.addCar(this.state.VIN, this.state.brand, this.state.year, this.state.color, this.state.license).send({
-                     from: this.state.accounts[0]});
-                 }
-             else this.setState({errorMessage: "Invalid year"});
-
+                } else await instance.methods.addCar(this.state.VIN, this.state.brand, this.state.year, this.state.color, this.state.license).send({
+                    from: this.state.accounts[0]
+                });
+            } else this.setState({errorMessage: "Invalid year"});
 
         } catch (err) {
             this.setState({errorMessage: err.message});
-
-
-
-
-
-        this.setState({loading: false});
+            this.setState({loading: false});
         }
     };
 
-
+    //handle methods are changing the states and prevent the default behaviour
     handleAddVIN = event => {
         event.preventDefault();
         this.setState({VIN: event.target.value});
         this.setState({errorMessage: ''});
     };
-
 
     handleAddBrand = event => {
         event.preventDefault();
@@ -78,15 +66,11 @@ class AddCar extends Component{
         this.setState({errorMessage: ''});
     };
 
-
-
-
     handleAddColor = event => {
         event.preventDefault();
         this.setState({color: event.target.value});
         this.setState({errorMessage: ''});
     };
-
 
     handleAddLicense = event => {
         event.preventDefault();
@@ -98,7 +82,6 @@ class AddCar extends Component{
         this.setState({year: event.target.value});
         this.setState({errorMessage: ''});
     };
-
 
     render() {
         let cardStyle = {
@@ -112,22 +95,20 @@ class AddCar extends Component{
             width: '100%',
 
         };
+
         let buttonStyle = {
             margin: '4px'
         };
 
-        console.log('anul:',this.state.year);
-
-        return(
-
+        return (
             <div>
                 <div>
-                    <Menu fixed='top' inverted>
-                        <Container>
+                    <Menu pointing fixed='top' inverted>
+                        <Container textAlign='center'>
                             <Link href="/index">
                                 <Menu.Item as='a' header>
                                     <Image size='normal' src='https://img.icons8.com/cotton/50/000000/retro-car.png'
-                                           style={{marginLeft: '1.5em'}}/>
+                                           style={{margin: '1,5em'}}/>
                                     <h2>Car Record</h2>
                                 </Menu.Item>
                             </Link>
@@ -147,14 +128,10 @@ class AddCar extends Component{
                                             <Dropdown.Item as='a'>Add Event</Dropdown.Item>
                                         </Link>
                                         }
-
-
                                     </Dropdown.Menu>
                                 </Dropdown>
                             }
-
                         </Container>
-
                     </Menu>
                 </div>
                 <Head>
@@ -170,87 +147,59 @@ class AddCar extends Component{
         }
       `}</style>
                 </Head>
-
                 >
-
-
                 <Segment inverted textAlign='center' style={cardStyle}>
-                    <h2  style={{margin: '12px auto'}}> Add Car </h2>
+                    <h2 style={{margin: '12px auto'}}> Add Car </h2>
                     <Form inverted className={"form-inline"} onSubmit={this.onSubmit}
                           error={!!this.state.errorMessage} style={formStyle}>
                         <Form.Group inline style={{width: '90%', margin: '30px auto'}}>
-
                             <Form.Field required style={{width: '70%', margin: '10px'}}>
-
-
                                 <Form.Input fluid label="VIN" placeholder="VIN of the car..."
                                             style={{width: '100%'}}
                                             value={this.state.VIN}
                                             onChange={this.handleAddVIN}
                                             error={!!this.state.errorMessage}
                                 />
-
-
                                 <Form.Input fluid label="BRAND:" placeholder="brand of the car"
                                             style={{width: '96.555%'}}
                                             value={this.state.brand}
                                             onChange={this.handleAddBrand}
                                             error={!!this.state.errorMessage}
                                 />
-
-
-
-
                                 <Form.Input fluid label="COLOR:" placeholder="color of the car"
                                             style={{width: '96.555%'}}
                                             value={this.state.color}
                                             onChange={this.handleAddColor}
                                             error={!!this.state.errorMessage}
                                 />
-
-
                                 <Form.Input fluid label="LICENSE:" placeholder="License"
                                             style={{width: '96.555%'}}
                                             value={this.state.license}
                                             onChange={this.handleAddLicense}
                                             error={!!this.state.errorMessage}
                                 />
-
-                                <Form.Input  label="YEAR:"
+                                <Form.Input label="YEAR:"
                                             style={{width: '90.555%'}}
                                             value={parseInt(this.state.year)}
-                                             onChange={this.handleYear}
+                                            onChange={this.handleYear}
                                             placeholder="Enter year of the car"
-                                             type="number"
-
+                                            type="number"
                                 />
                             </Form.Field>
-
-
-
                             <Form.Field>
-                                <Button  onClick={this.onSubmit} color={"purple"}>
-                                    Make Changes
+                                <Button onClick={this.onSubmit} color={"purple"}>
+                                    Submit
                                 </Button>
                             </Form.Field>
                         </Form.Group>
-                        <Message style={buttonStyle} error header={"Error!"} content={this.state.errorMessage}/>
+                        <Message style={buttonStyle} error header={"Notification:"} content={this.state.errorMessage}/>
                     </Form>
                 </Segment>
-
-
-
-
-
                 <div>{this.state.loading === true ? <SimpleSnackbar/> : null}</div>
-
                 <FixedMenuLayout/>
-
             </div>
-
         );
     }
-
 }
 
 export default AddCar
